@@ -5,24 +5,36 @@ export default function TextForm(props) {
     let newText = text.toUpperCase()
     setText(newText)
   }
-  const handleLowCase = ()=>{
+  const handleLowCase = () => {
     let newText = text.toLowerCase()
     setText(newText)
   }
-  const handlePasCase = ()=>{
+  const handlePasCase = () => {
     let textList = text.toLowerCase().split(" ")
-    for(let i = 0; i<textList.length; i++){
+    for (let i = 0; i < textList.length; i++) {
       textList[i] = textList[i].charAt(0).toUpperCase() + textList[i].substring(1)
     }
     let newText = textList.join("")
     setText(newText)
   }
-  const handleSnakeCase = ()=>{
+  const handleSnakeCase = () => {
     let newText = text.toLowerCase().split(" ").join("_")
     setText(newText)
   }
-  const clearText = ()=>{
+  const clearText = () => {
     setText("")
+  }
+
+  const handleCopy = ()=>{
+    console.log("copied")
+    let textContent = document.getElementById("exampleFormControlTextarea1")
+    textContent.select()
+    navigator.clipboard.writeText(textContent.value)
+  }
+  const handleRemove = ()=>{
+    const exSpace = /[ ]+/;
+    let newText = text.split(exSpace)
+    setText(newText.join(" "))
   }
 
 
@@ -34,21 +46,23 @@ export default function TextForm(props) {
   return (
     <>
       <div className='container'>
-        <h2>{props.heading}</h2>
+        <h2 style={{color:props.mode==="dark" ? "white" : "black"}}>{props.heading}</h2>
         <div className="mb-3">
-          <textarea placeholder='Enter your text here...' value={text} onChange={handleOnChange} className="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
+          <textarea placeholder='Enter your text here...' value={text} style={{backgroundColor:props.mode === "dark" ? "#1b1b31" : "white", color:props.mode==="dark" ? "white" : "black"}} onChange={handleOnChange} className="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
         </div>
-        <button onClick={handleUpClick} className='mx-2 btn btn-primary '>convert to uppercase</button>
-        <button className='mx-2 btn btn-primary' onClick={handleLowCase}>convert to lowercase</button>
-        <button className='mx-2 btn btn-primary' onClick={handlePasCase}>convert to PascalCase</button>
-        <button className='mx-2 btn btn-primary' onClick={handleSnakeCase}>convert to snake_case</button>
-        <button className='mx-2 btn btn-primary' onClick={clearText}>clear</button>
+        <button onClick={handleUpClick} className='m-2 btn btn-primary '>convert to upperAboutcase</button>
+        <button className='m-2 btn btn-primary' onClick={handleLowCase}>convert to lowercase</button>
+        <button className='m-2 btn btn-primary' onClick={handlePasCase}>convert to PascalCase</button>
+        <button className='m-2 btn btn-primary' onClick={handleSnakeCase}>convert to snake_case</button>
+        <button className='m-2 btn btn-primary' onClick={clearText}>clear</button>
+        <button className='m-2 btn btn-primary' onClick={handleCopy}>Copy Text</button>
+        <button className='m-2 btn btn-primary' onClick={handleRemove}>Remove Extra Spaces</button>
 
       </div>
-      <div className='container my-2'>
+      <div className='container my-2' style={{color:props.mode==="dark" ? "white" : "black"}}>
         <h2>Your text summary</h2>
         <p>{text.split(" ").length} words, {text.length} characters</p>
-        <p>{0.008*text.split(" ").length} minutes reading</p>
+        <p>{0.008 * text.split(" ").length} minutes reading</p>
         <h2>Preview</h2>
         <p>{text}</p>
       </div>
