@@ -4,10 +4,13 @@ export default function TextForm(props) {
   const handleUpClick = () => {
     let newText = text.toUpperCase()
     setText(newText)
+    props.showAlert("converted to uppercase", "success")
   }
   const handleLowCase = () => {
     let newText = text.toLowerCase()
     setText(newText)
+    props.showAlert("converted to lowercase", "success")
+
   }
   const handlePasCase = () => {
     let textList = text.toLowerCase().split(" ")
@@ -50,7 +53,7 @@ export default function TextForm(props) {
         <div className="mb-3">
           <textarea placeholder='Enter your text here...' value={text} style={{backgroundColor:props.mode === "dark" ? "#1b1b31" : "white", color:props.mode==="dark" ? "white" : "black"}} onChange={handleOnChange} className="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
         </div>
-        <button onClick={handleUpClick} className='m-2 btn btn-primary '>convert to upperAboutcase</button>
+        <button onClick={handleUpClick} className='m-2 btn btn-primary '>convert to uppercase</button>
         <button className='m-2 btn btn-primary' onClick={handleLowCase}>convert to lowercase</button>
         <button className='m-2 btn btn-primary' onClick={handlePasCase}>convert to PascalCase</button>
         <button className='m-2 btn btn-primary' onClick={handleSnakeCase}>convert to snake_case</button>
@@ -61,7 +64,7 @@ export default function TextForm(props) {
       </div>
       <div className='container my-2' style={{color:props.mode==="dark" ? "white" : "black"}}>
         <h2>Your text summary</h2>
-        <p>{text.split(" ").length} words, {text.length} characters</p>
+        <p>{text===""? 0 :text.split(" ").length} words, {text.split(" ").join("").length} characters</p>
         <p>{0.008 * text.split(" ").length} minutes reading</p>
         <h2>Preview</h2>
         <p>{text}</p>
